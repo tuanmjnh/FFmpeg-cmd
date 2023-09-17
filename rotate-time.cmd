@@ -1,0 +1,1 @@
+ffmpeg -i ../i.mp4 -vf "rotate=3*PI/180:enable='between(t,2,3)'" ../o.mp4

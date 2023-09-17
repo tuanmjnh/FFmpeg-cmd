@@ -1,0 +1,1 @@
+ffmpeg -i ../i.mp4 -hide_banner -af 'volume=1.5' ../o.mp4

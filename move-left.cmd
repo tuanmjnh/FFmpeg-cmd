@@ -1,0 +1,1 @@
+ffmpeg -i ../i.mp4 -vf v360=e:e:yaw=90:pitch=0:roll=0 ../o.mp4

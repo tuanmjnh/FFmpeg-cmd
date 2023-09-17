@@ -1,0 +1,1 @@
+ffmpeg -i ../i.mp4 -hide_banner -r 1 -f image2 image-%2d.png
