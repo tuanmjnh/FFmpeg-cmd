@@ -1,0 +1,3 @@
+ffmpeg -hide_banner -y -i i.mp4 -filter_complex "[0]scale=iw*10:ih*10,crop=in_w*0.85:in_h*1:'if(lt(t,5),in_w*0.10/2*t*2,1920-in_w*0.10/2*(t-5))':'if(lt(t,5),in_h*0.10/3*t,1080-in_h*0.10/3*(t-5))',scale=hd1080[v0];[v0]zoompan=z='if(lte(mod(time,10),3),2,1)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'" -c:v libx264 -profile:v high444 -pix_fmt yuv420p -level 3.1 o.mp4
+
+ffmpeg -hide_banner -y -i i.mp4 -loop 1 -filter_complex "[0]scale=iw*10:ih*10,crop=in_w*0.85:in_h*1:'if(lte(t,5),in_w*0.10/2*t*2,1920-in_w*0.10/2*(t-5))':'if(lte(t,5),in_h*0.10/3*t,1080-in_h*0.10/3*(t-5))',scale=hd1080[v0];[v0]zoompan=z='if(lte(mod(time,10),3),2,1)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'" -c:v libx264 -profile:v high444 -pix_fmt yuv420p -level 3.1 o.mp4

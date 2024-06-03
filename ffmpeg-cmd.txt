@@ -1,0 +1,280 @@
+ffmpeg -i i.mp4 -i overlayOld1.mp4 -filter_complex "[1:v]scale=960:540[ol];[2:v]scale=640:360[top2];[tmp][top2]overlay" o.mp4
+
+ffmpeg -i i.mp4 -i overlayOld1.mp4 -filter_complex "[1:v][0:v]overlay" o.mp4
+
+ffmpeg -hide_banner -y -i i.mp4 -filter_complex "[0]scale=iw*10:ih*10,crop=in_w*0.85:in_h*1:'if(lt(t,5),in_w*0.10/2*t*2,1920-in_w*0.10/2*(t-5))':'if(lt(t,5),in_h*0.10/3*t,1080-in_h*0.10/3*(t-5))',scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,10),3),2,1)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'" o.mp4
+
+ffmpeg -hide_banner -y -i i.mp4 -af 'volume=1.1' -filter_complex "[0]scale=iw*10:ih*10,crop=in_w*0.85:in_h*1:'if(lt(t,5),in_w*0.10/2*t*2,1920-in_w*0.10/2*(t-5))':'if(lt(t,5),in_h*0.10/3*t,1080-in_h*0.10/3*(t-5))',scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,10),3),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=29.97[v1];[v1] hflip,setpts=1.1*PTS" o.mp4
+
+ffmpeg -hide_banner -y -i i.mp4 -filter_complex "[0]scale=iw*10:ih*10,crop=in_w*0.85:in_h*1:'if(lt(t,5),in_w*0.10/2*t*2,1920-in_w*0.10/2*(t-5))':'if(lt(t,5),in_h*0.10/3*t,1080-in_h*0.10/3*(t-5))',scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,10),3),2,1)':d=1:x='iw*1.5':y='ih*1.5':fps=30" o.mp4
+
+ffmpeg -hide_banner -y -i i.mp4 -filter_complex "[0]scale=iw*10:ih*10,crop=in_w*0.85:in_h*1:'if(lt(t,5),in_w*0.10/2*t*2,1920-in_w*0.10/2*(t-5))':'if(lt(t,5),in_h*0.10/3*t,1080-in_h*0.10/3*(t-5))',scale=1920:1080" o.mp4
+
+ffmpeg -hide_banner -y -i i.mp4 -i overlay/overlayOld1.mp4 -filter_complex "[0]scale=iw*10:ih*10,crop=in_w*0.85:in_h*1:'if(lt(t,5),in_w*0.10/2*t*2,1920-in_w*0.10/2*(t-5))':'if(lt(t,5),in_h*0.10/3*t,1080-in_h*0.10/3*(t-5))',scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,10),3),2,1)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'[v1];[1]crop=400:711;[v1][1]overlay=1920:1080" -c:v libx264 -profile:v high444 -pix_fmt yuv420p -level 3.1 o.mp4
+
+ffmpeg -hide_banner -y -i i.mp4 -stream_loop -1 -i overlay.gif -filter_complex [0][1]overlay=x=0:y=0:shortest=1 output.mp4
+
+
+ffmpeg -hide_banner -y -i "D:\\applications\\ffmpeg\\i.mp4" -af 'volume=1.1' -filter_complex "[0]scale=iw*10:ih*10,crop=in_w*0.85:in_h*1:'if(lt(t,5),in_w*0.10/2*t*2,1920-in_w*0.10/2*(t-5))':'if(lt(t,5),in_h*0.10/3*t,1080-in_h*0.10/3*(t-5))',scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,10),3),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=29.97[v1];[v1] hflip,setpts=1.1*PTS" "D:\\applications\\ffmpeg\\i .mp4"
+
+ffmpeg -hide_banner -y -i "D:\\applications\\ffmpeg\\i.mp4" -af "volume=1.1" -filter_complex "[0]scale=iw*10:ih*1,crop=in_w*0.80:in_h*1:'if(lt(t,10),in_w*0.10/2*t,1920-in_w*0.10/2*(t-10))':1080,scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,8),1),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=29.97[v1];[v1] hflip,setpts=1.1*PTS" "D:\\applications\\ffmpeg\\i .mp4"
+
+ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0 i.mp4
+
+ffmpeg -hide_banner -y -i "i got EVERY season 4 mythic.mp4"  -ss 00:01:00 -to 00:02:00 -vf "fps=60" "mythic.mp4"
+
+ffmpeg -hide_banner -y -i "i got EVERY season 4 mythic.mp4"  -ss 00:01:00 -to 00:02:00 "mythic2.mp4"
+
+ffmpeg -hide_banner -y -i "mythic.mp4" -ss 00:00:00 -to 00:00:10 -c:v libx265 -crf 28 "mythic_o.mp4"
+
+ffmpeg -hide_banner -y -i "i got EVERY season 4 mythic.mp4"
+
+ffmpeg -hide_banner -y -i "69 fortnite season 4 secrets .mp4"  -ss 00:00:00 -to 00:00:20 "69 fortnite season 4 secrets 1.mp4"
+ffmpeg -hide_banner -y -i "69 fortnite season 4 secrets .mp4"  -ss 00:00:00 -to 00:00:20 -c:v libx265 -crf 28 -c copy "69 fortnite season 4 secrets 2.mp4"
+
+ffmpeg -hide_banner -y -i "69 fortnite season 4 secrets 2.mp4" -vf "mpdecimate,setpts=N/FRAME_RATE/TB" "69 fortnite season 4 secrets 3.mp4"
+
+
+ffmpeg -hide_banner -y -i "D:\applications\ffmpeg\mythic.mp4" -ss 00:00:00 -to 00:00:25 -af "volume=1.1" -aspect 9:16 -b:v 10M -filter_complex "[0]scale=iw*10:ih*1,crop=in_w*0.80:in_h*1:'if(lt(t,10),in_w*0.10/2*t+1,1920-in_w*0.10/2*(t-10))':1080,scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,8),1),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=60[v1];[v1] hflip,setpts=1.1*PTS" "D:\\applications\\ffmpeg\\mythic_o.mp4"
+
+ffmpeg -hide_banner -y -i "D:\applications\ffmpeg\tm.mp4" -ss 00:00:25 -to 00:00:50 -c:v libx265 -crf 28 -af "volume=1.1" -aspect 9:16 -b:v 10M -filter_complex "[0]scale=iw*10:ih*1,crop=in_w*0.80:in_h*1:'if(lt(t,30),in_w*0.10/2*(t-30),1920-in_w*0.10/2*((t-30)-10))':1080,scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,8),1),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=60[v1];[v1]scale=1080:1920,hflip,setpts=1.1*PTS" "D:\\applications\\ffmpeg\\tm_o.mp4"
+
+ffmpeg -hide_banner -y -i "D:\applications\ffmpeg\test\mythic.mp4" -ss 00:00:23 -to 00:00:47 -c copy -aspect 9:16 -b:v 10M -af "volume=1.1" -filter_complex "[0]scale=iw*10:ih*1,crop=in_w*0.80:in_h*1:'if(lt(t,28),in_w*0.10/2*(t-28),1920-in_w*0.10/2*((t-28)-10))':1080,scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,8),1),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=60[v1];[v1]scale=1080:1920,hflip,setpts=1.1*PTS" "D:\applications\ffmpeg\test\split\mythic2.mp4"
+
+ffmpeg -i videoplayback.mp4 -ss 2 -to 5 -vcodec libx264 -acodec copy output.mp4
+
+ffmpeg -hide_banner -y -i "D:\MMO\tiktok\videos\Show\WildNOut\Wild N Out - AAP Ferg in a Chico vs. Karlous Old-School Rap Battle - #Wildstyle.mp4" -ss 200 -to 225 -c:v libx265 -crf 28 -aspect 9:16 -b:v 10M -af "volume=1.1" -filter_complex "[0]scale=iw*10:ih*1,crop=in_w*0.80:in_h*1:'if(lt(t,5),in_w*0.10/2*(t-5),1920-in_w*0.10/2*((t-5)-10))':1080,scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,8),1),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=29.97002997002997[v1];[v1]scale=1080:1920,hflip,setpts=1.1*PTS" "D:\MMO\tiktok\videos\Show\WildNOut\test\Wild N Out - AAP Ferg in a Chico vs. Karlous Old-School Rap Battle - #Wildstyle1.mp4"
+
+ffmpeg -hide_banner -y -ss 200 -i "D:\MMO\tiktok\videos\Show\WildNOut\Wild N Out - AAP Ferg in a Chico vs. Karlous Old-School Rap Battle - #Wildstyle.mp4" -to 225 -c:v libx265 -crf 28 -aspect 9:16 -af "atempo=2.5" -vf "setpts=(PTS-STARTPTS)/2.5" "input_video_2.5X.mp4"
+
+ffmpeg -hide_banner -y -i "D:\MMO\tiktok\videos\Show\WildNOut\Wild N Out - AAP Ferg in a Chico vs. Karlous Old-School Rap Battle - #Wildstyle.mp4" -ss 190 -to 225 -c:v libx265 -crf 28 -aspect 9:16 -b:v 10M -filter_complex "[0]scale=iw*10:ih*1,crop=in_w*0.80:in_h*1:'if(lt(t,5),in_w*0.10/2*(t-5),1920-in_w*0.10/2*((t-5)-10))':1080,scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,8),1),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=29.97002997002997[v1];[v1]scale=1080:1920,hflip,setpts=0.9*PTS[v];[0:a]atempo=1.11,volume=1.1[a]" -map "[v]" -map "[a]" output.mp4
+
+ffmpeg -hide_banner -y -i "mythic.mp4" -vn -af "atempo=1.11" mythic-audio.aac
+
+Had the same problem today... The trick to have the output video to last correctly is removing the audio with -an:
+
+ffmpeg -hide_banner -y -i mythic.MP4 -filter:v "setpts=0.9*PTS" -an mythic_fast.MP4
+
+ffmpeg -hide_banner -y -i mythic.MP4 -filter_complex "[0:v]setpts=PTS/2[v];[0:a]atempo=2.0,volume=1.1[a]" -map "[v]" -map "[a]" -c:v h264_qsv -b:v 1.5M mythic_x2.MP4
+
+ffmpeg -hide_banner -y -ss 3700 -i "D:\\MMO\\tiktok\\videos\\Game\\8.Grian\\Hermitcraft 9- Episode 47 - PLAYING DECKED OUT.mp4"  -to 3740 -filter_complex "[0:v]setpts=PTS/1.5[v];[0:a]atempo=1.5,volume=1.1[a]" -map "[v]" -map "[a]" -c:v h264_qsv Grian.mp4
+/total: 3735
+Error Qavg: nan
+
+ffmpeg -hide_banner -y -i "D:\\MMO\\tiktok\\videos\\Game\\8.Grian\\Hermitcraft 9- Episode 47 - PLAYING DECKED OUT.mp4" -ss 3700 -to 3740 -c:v libx264 -crf 30 trim_opseek_encode.mp4
+
+
+With some videos it is not enough, so add also the -r <framerate> parameter by specifying the same FPS of the original video. So, if for example vid.mp4 was 30 fps, encode with:
+
+ffmpeg -i mythic.MP4 -filter:v "setpts=0.25*PTS" -r 60 -an mythic_fast.MP4
+Be aware you can also use the alternative notation to speed up the video, without the decimals, like so (PTS/4 = 4x):
+
+ffmpeg -i vid.MP4 -filter:v "setpts=PTS/4" -r 30 -an vid_fast.MP4
+
+
+// ffmpeg with GPU AMD cards, use these -vcodec options:
+Windows:
+h264_amf
+hevc_amf
+
+Linux:
+h264_vaapi
+hevc_vaapi
+
+ffmpeg -y -i mythic.mp4 -b:v 10M -c:v h264_amf -vf crop=1920:848:0:116 -c:a copy output.mp4
+
+ffmpeg -y -i mythic.mp4 -b:v 10M -c:v hevc_amf -vf crop=1920:848:0:116 -c:a copy output.mp4
+
+ffmpeg -y -i mythic.mp4 -b:v 10M -c:v hevc -vf crop=1920:848:0:116 -c:a copy output.mp4
+
+ffmpeg -y -i mythic.mp4 -b:v 10M -c:v h264_vaapi -vf crop=1920:848:0:116 -c:a copy output.mp4
+
+ffmpeg -y -i mythic.mp4 -b:v 10M -c:v hevc_vaapi -vf crop=1920:848:0:116 -c:a copy output.mp4
+
+ffmpeg -y -i mythic.mp4 -vf crop=1920:848:0:116 -c:a copy -b:v 10M -c:v h264_mf output.mp4
+
+ffmpeg -y -i mythic.mp4 -vf crop=1920:848:0:116 -c:a copy -b:v 10M -c:v h264_amf output.mp4
+
+// ffmpeg with nvidia gpu
+https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html
+ffmpeg -y -vsync 0 -hwaccel cuda -hwaccel_output_format cuda -i mythic.mp4 -c:a copy -c:v h264_nvenc -b:v 10M out_gpu.mp4
+
+ffmpeg -y -i i.mp4 -c:a copy -c:v h264_nvenc -b:v 10M out_gpu.mp4
+
+ffmpeg -y -hwaccel cuvid -i mythic.mp4 -c:v h264_nvenc -preset slow out_gpu.mp4
+
+fmpeg -y -i mythic.mp4 -c:a copy -c:v h264_nvenc -b:v 10M out_gpu.mp4
+
+
+ffmpeg -y -i i.mp4 -c:v h264_qsv -b:v 10M out_cpu.mp4
+
+
+ffmpeg -hide_banner -y -ss 0 -i "i.mp4"  -t 50 -crf 28 -aspect 9:16 -b:v 10M -filter_complex "[0]scale=iw*10:ih*1,crop=in_w*0.80:in_h*1:'if(lt(t,5),in_w*0.10/2*(t-5),1920-in_w*0.10/2*((t-5)-10))':1080,scale=1920:1080[v0];[v0]zoompan=z='if(lte(mod(time,8),1),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=29.97002997002997[v1];[v1]scale=1080:1920,hflip=,setpts=PTS/1.5[v];[0:a]atempo=1.5,volume=1.1[a]" -map "[v]" -map "[a]" -c:v h264_qsv "out.mp4"
+
+//=if(lte(mod(time,8),1),2,1)
+ffmpeg -hide_banner -y -ss 0 -i "i.mp4"  -t 50 -crf 28 -aspect 9:16 -b:v 10M -filter_complex "hflip,transpose='if(lte(mod(time,9),3),0,1)'" -c:v h264_qsv "out.mp4"
+
+
+ffmpeg -y -ss 0 -i i.mp4 -t 10 -crf 28 -aspect 9:16 -b:v 5M -filter_complex "[0:v]scale=1080:1920,hflip,setpts=PTS/1.1[v];[0:a]atempo=1.1,volume=1.1[a]" -map "[v]" -map "[a]" -c:v h264_qsv o.mp4
+
+ffmpeg -y -ss 0 -i i2.mp4 -t 10 -crf 28 -aspect 9:16 -b:v 5M -filter_complex "[0:v]scale=ih*16/9:ih,scale=iw:-2,setsar=1,hflip,setpts=PTS/1.1[v];[0:a]atempo=1.1,volume=1.1[a]" -map "[v]" -map "[a]"  -c:v h264_qsv o.mp4
+
+ffmpeg -hide_banner -y -ss 0 -i i2.mp4 -t 10 -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]scale=ih*16/9:-1:force_original_aspect_ratio=decrease[fg];[bg][fg]overlay=y=(H-h)/2" -c:v h264_qsv o_aspect_916.mp4  
+
+ffmpeg -hide_banner -y -ss 0 -i i2.mp4 -t 10 -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]scale=1080/0.8:1920*0.8[fg];[bg][fg]overlay=y=(H-h)/2" -c:v h264_qsv o_aspect_916.mp4
+
+ffmpeg -hide_banner -y -ss 0 -i i.mp4 -t 10 -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]scale=1080:1920[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2" -c:v h264_qsv o_aspect_916.mp4
+
+ffmpeg -hide_banner -y -ss 0 -i i.mp4 -t 10 -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]scale=2079:1560,hflip,vflip[fg];[bg][fg]overlay=-513:159" -c:v h264_qsv o_aspect_916.mp4
+
+ffmpeg -hide_banner -y -ss 0 -i i2.mp4 -t 10 -lavfi "[0:v]scale=256/81*iw:256/81*ih,boxblur=luma_radius=min(h\,w)/40:luma_power=3:chroma_radius=min(cw\,ch)/40:chroma_power=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2,setsar=1,crop=w=iw*81/256"  output.mp4
+
+ffmpeg -hide_banner -y -ss 0 -i i2.mp4 -t 10 -vf "scale=-1:1080,setsar=1,crop='if(gt(iw/ih,9/16),ih_9/16,iw)':'if(gt(iw/ih,9/16),ih,iw_16/9)',scale=1080:1920,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:white" -c:a copy -c:v h264_qsv output_video.mp4
+
+ffmpeg -hide_banner -y -ss 0 -i i2.mp4 -t 10 -aspect 9:16 -filter_complex "[0:v]scale=iw*0.8:ih*1[1:v];[1:v]crop=ih*(9/16):ih[v];[0:a]atempo=1.1,volume=1.1[a]" -map "[v]" -map "[a]" -c:v h264_qsv o.mp4
+
+
+ffmpeg -hide_banner -y -ss 0 -i i.mp4 -t 10 -crf 28 -aspect 9:16 -b:v 1M -filter_complex "[0]scale=1080:1920,setpts=PTS/1.3[v];[0:a]atempo=1.3,volume=1.3[a]" -map [v] -map [a]  -c:v h264_qsv 0.mp4
+
+ffplay -f lavfi -i i.mp4 -aspect 9:16 -b:v 5M -filter_complex "color=black:s=1080x1920,setsar=1[bg];[0:v]scale=1080*2.0:1920*1.0,setpts=PTS/1.3[v1];[bg][v1]overlay=(W-w)/2:(H-h)/2[v];[0:a]atempo=1.3,volume=1.3[a]" -map [v] -map [a]  -c:v h264_qsv 0.mp4
+
+ffplay -f lavfi "movie=i.mp4,color=black:s=1080x1920,setsar=1[bg],[0:v]scale=1080*2.0:1920*1.0,setpts=PTS/1.3[v1];[bg][v1]overlay=(W-w)/2:(H-h)/2[v];[0:a]atempo=1.3,volume=1.3[a]"
+
+ffplay -i i.mp4 -vf "color=black:s=540x960,setsar=1[bg];scale=540*2.0:960*1.0,setpts=PTS/1.3[v1];[bg][v1]overlay=(W-w)/2:(H-h)/2[v];[0:a]atempo=1.3,volume=1.3[a]" -x 540 -y 960
+
+ffplay -autoexit -x 1280 -y 720 i.mp4 -f lavfi "movie="black:s=1280x720[fg];[in][fg]overlay=388:289:enable=between(t\,5\,20)"
+
+360 = 100%
+400-360/360*100 = 11%
+
+640
+
+
+360/-79=1080/x
+x=1080/360*-79
+
+360/1080=-79/x
+x=-79*1080/360=-237
+
+
+-79/360*100=-21.9
+
+1080/
+
+-79*1080/360
+
+ffmpeg -i "video.mp4" -i "music.m4a" -c:v copy -map 0:v:0 -map 1:a:0 -shortest "out.mp4"
+
+
+ffmpeg -hide_banner -y -ss 10 -i i.mp4 -i a.m4a -t 20 -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]scale=1935:993,hflip,vflip,setpts=PTS/1.1,fps=28[v];[bg][v]overlay=-427:463[v];[0:a]atempo=1.1,volume=1.1[a0];[1:a]atempo=1.0,volume=1.0[a1];[a0][a1]amix=inputs=2[a]" -map [v] -map [a,a1] -c:v h264_qsv o.mp4
+
+
+ffmpeg -hide_banner -y -ss 0 -i i.mp4 -t 10 -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(lte(mod(time,10),2),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=30[v1];[v1]scale=2067:1563,hflip,vflip,setpts=PTS/1.1[v];[bg][v]overlay=-493:178;drawtext=text='© Krishna':font='Times New Roman':x=(main_w-text_w-10):y=(main_h-text_h-10):fontsize=32:fontcolor=black:box=1:boxcolor=white@0.5:boxborderw=5[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a] -c:v h264_qsv o.mp4
+
+ffmpeg -hide_banner -y -ss 0 -i i.mp4 -t 10 -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(lte(mod(time,10),2),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=30[v1];[v1]scale=2067:1563,hflip,vflip,setpts=PTS/1.1[v];[bg][v]overlay=-493:178[v];[v]drawtext=fontfile=C:/Windows/Fonts/times.ttf:text='© Krishna':x=(main_w-text_w-10):y=(main_h-text_h-10):fontsize=32:fontcolor=black:box=1:boxcolor=0xFF0000@0.5:boxborderw=5,drawtext=fontsize=18:fontcolor=0xFF8000:fontfile='C:/Windows/Fonts/arial.ttf':text='Focal Length':x=351:y=1782[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a] -c:v h264_qsv o.mp4
+
+[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(lte(mod(time,10),2),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=30[v1];[v1]scale=1080:1920,hflip,vflip,setpts=PTS/1.1[v];[bg][v]overlay=0:0[v];[v]drawtext=fontfile='C:\Windows\Fonts\times.ttf':text='tuanmjnh':fontsize=12:fontcolor=0xFF0000:x=1684:y=57024,drawtext=fontfile='C:\Windows\Fonts\times.ttf':text='tesssssst':fontsize=12:fontcolor=0xFF0000:x=423:y=1719[v];[0:a]atempo=1.1,volume=1.1[a]
+
+{X = 423 Y = 1719}
+
+1080:1920
+360:640
+{X = 141 Y = 567}
+
+  var rect = this.getBoundingClientRect();
+        var scaleX = this.width / rect.width;
+        var scaleY = this.height / rect.height;
+
+        var mouseX = Math.round((event.clientX - rect.left) * scaleX);
+        var mouseY = Math.round((event.clientY - rect.top ) * scaleY);
+		
+Set ffmpeg="D:/applications/ffmpeg/TMFFmpegApp/ffmpeg.exe"		
+D:/applications/ffmpeg/TMFFmpegApp/ffmpeg.exe -hide_banner -y -i "C:\Users\tuanmjnh\Downloads\26186089.Cute Baby & Father Made 🚗  #shorts[UJCxQ54i0o0].mp4" -crf 28 -aspect 9:16 -b:v 1M -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]scale=1080:1920,setpts=PTS/1.0[v];[bg][v]overlay=0:0[v];[v]drawtext=fontfile='/Windows/Fonts/verdanaz.ttf':text='Part 1':fontsize=60:fontcolor=0xFF0000:x=(w-text_w)/2:y=108:box=1:boxcolor=0x808080@0.5:boxborderw=5,drawtext=fontfile='/Users/tuanmjnh/AppData/Local/Microsoft/Windows/Fonts/VHCOMSCI.TTF':text='Part 1':fontsize=60:fontcolor=0x0080FF:x=(w-text_w)/2:y=1512:box=1:boxcolor=0x808080@0.5:boxborderw=10[v];[0:a]atempo=1.0,volume=1.0[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Downloads\26186089.Cute Baby & Father Made 🚗  #shorts[UJCxQ54i0o0] .mp4"
+
+ffmpeg -hide_banner -y -ss 0 -i i.mp4 -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(lte(mod(time,15),5),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=30[v1];[v1]scale=1080:606,setpts=PTS/1.0[v];[bg][v]overlay=0:657[v];[v]drawtext=fontfile='/Windows/Fonts/times.ttf':text='Part %d%':fontsize=60:fontcolor=0x000000:x=(w-text_w)/2:y=1395[v];[0:a]atempo=1.0,volume=1.0[a]" -map [v] -map [a,a1] -c:v h264_qsv o.mp4
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\期待の新作おもちゃの兵隊が戦うバトロワゲームが面白すぎるMini Royale鳥の爪団実況1.mp4" -aspect 9:16 -b:v 1M -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(lte(mod(time,15),5),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=60[v1];[v1]scale=1080:606,setpts=PTS/1.0[v];[bg][v]overlay=0:657[v];[v]drawtext=fontfile='/Windows/Fonts/times.ttf':text='Part 1':fontsize=60:fontcolor=0x000000:x=(w-text_w)/2:y=1395[v];[0:a]atempo=1.0,volume=1.0[a]" -map [v] -map [a] -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\期待の新作おもちゃの兵隊が戦うバトロワゲームが面白すぎるMini Royale鳥の爪団実況1 .mp4"
+
+ffmpeg -hide_banner -y -ss 0 -i "C:\Users\tuanmjnh\Desktop\期待の新作おもちゃの兵隊が戦うバトロワゲームが面白すぎるMini Royale鳥の爪団実況1.mp4" -t 10 -aspect 9:16 -b:v 1M -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(lte(mod(time,15),5),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=60[v1];[v1]scale=1080:606,setpts=PTS/1.0[v];[bg][v]overlay=0:657[v];[v]drawtext=fontfile='/Windows/Fonts/times.ttf':text='Part 1':fontsize=60:fontcolor=0x000000:x=(w-text_w)/2:y=1395,drawtext=text_shaping=1:fontfile='/Users/tuanmjnh/AppData/Local/Microsoft/Windows/Fonts/VNARIALB.TTF':text='パート 1':fontsize=90:fontcolor=0xFF0000:x=(w-text_w)/2:y=354,drawtext=fontfile='/Windows/Fonts/timesbi.ttf':text='Phần 1 - Tập 1':fontsize=60:fontcolor=0xFF0080:x=(w-text_w)/2:y=120:box=1:boxcolor=0x000000@0.1:boxborderw=1[v];[0:a]atempo=1.0,volume=1.0[a]" -map [v] -map [a] -c:v h264_qsv "C:\Users\tuanm\Desktop\期待の新作おもちゃの兵隊が戦うバトロワゲームが面白すぎるMini Royale鳥の爪団実況1 .mp4"
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4" -aspect 9:16 -b:v 1M -filter_complex "[0:v]boxblur=40,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(lte(mod(time,15),5),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=25[v1];[v1]scale=1080:3012,hflip,setpts=PTS/1.1,[v];[bg][v]overlay=0:-546[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g]. 01 .mp4"
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4" -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(lte(mod(time,15),5),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=25[v1];[v1]scale=1080:3012,hflip,setpts=PTS/1.1[v];[bg][v]overlay=shortest=1,scale=0:-546[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g]. 01 .mp4"
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4" -f lavfi -i "color=black:s=1080x1920" -aspect 9:16 -b:v 1M -filter_complex "[0:v]setsar=sar=1/1[s];[s][1:v]overlay=0:-546[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a] -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g]. 01 .mp4"
+
+-frames:v
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4" -aspect 9:16 -b:v 1M -filter_complex "[0:v]zoompan=z='if(gte(time,15)*lte(mod(time,15),5),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=25[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a] -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g]. 01 .mp4"
+
+
+ffmpeg -hide_banner -y -safe 0 -f concat -i "D:\applications\TMFFmpegApp\TMFFmpegApp\bin\Debug\net7.0-windows\Temp/files.txt" -filter_complex "fps=25,scale=1080:1920" "C:\Users\tuanmjnh\Desktop\out.mp4"
+
+
+ffmpeg -hide_banner -y -ss 5.0 -i "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4" -t 11 -crf 28 -aspect 9:16 -b:v 1M -filter_complex "fps=25,scale=1080:1920" -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4"
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4" -filter_complex "[0:v]trim=3.48:5.72,setpts=PTS-STARTPTS[v0];[0:v]trim=6.56:8.68,setpts=PTS-STARTPTS[v1];[v0][v1]concat=n=2:v=1:a=0[v]" -map [v] -c:a copy -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\out.mp4"
+
+
+ffmpeg -ss 5 -i "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4" -t 10 -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(gte(time,5)*lte(mod(time,5),2),2,1)':d=1:x='iw/1.5-(iw/zoom/1.5)':y='ih/1.5-(ih/zoom/1.5)':fps=25[v1];[v1]scale=1080:1920,hflip[v];[bg][v]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" -map [v] -map [a] -hide_banner -y -crf 28 -aspect 9:16 -b:v 1M -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].011.mp4"
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts.mp4" -crf 28 -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(gte(time,5)*lte(mod(time,5),3),1.3,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=60[v1];[v1]scale=1080:1920[v];[bg][v]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].012.mp4"
+
+ffmpeg -hide_banner -y -safe 0 -f concat -i "C:\Users\tuanmjnh\Desktop\files.txt" -c:v h264_qsv join.mp4
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\join.mp4" -filter_complex "[0:v]setpts=PTS/1.1,fps=25[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a] -c:v h264_qsv speedup.mp4
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4" -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]scale=iw:ih,zoompan=z='if(between(in_time,0,1),2,1)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':fps=25[vz];[vz]scale=1080:1920[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01 .mp4"
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].01.mp4" -aspect 9:16 -b:v 1M -filter_complex "zoompan=z='if(gte(time,5)*lte(mod(time,10),3),2,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=25" -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[VNyjGYvMW6g].012.mp4"
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts.mp4" -crf 28 -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(gte(time,5.1)*lte(mod(time,5.1),2.1),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=60[vz];[vz]scale=1080:1920[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts .mp4"
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts.mp4" -crf 28 -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,5.1,7.2),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=60[vz];[vz]scale=1080:1920[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts .mp4"
+
+-ss 0 %input% -t 3 -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,0,3.3),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=%fps%[vz];[vz]scale=1080:1920[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" %output%
+-ss 3 %input% -t 9 -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,0,3.3),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=%fps%[vz];[vz]scale=1080:1920,hflip[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" %output%
+-hide_banner -y -safe 0 -f concat -i %input% -c copy  %output%
+%input% -filter_complex ""[0:v]setpts=PTS/1.1,fps=%fps%[v];[0:a]atempo=1.1[a]"" %output%
+
+ffmpeg -ss 0 -i "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts.mp4" -t 3 -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=60[vz];[vz]scale=1080:1920[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" -map [v] -map [a] -hide_banner -y  -aspect 9:16 -b:v 1M  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\20615022-0c5f-450f-a0ea-278c5b8337c8_0.mp4"
+
+ffmpeg -ss 3 -i "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts.mp4" -t 9 -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=60[vz];[vz]scale=1080:1920,hflip[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" -map [v] -map [a] -hide_banner -y  -aspect 9:16 -b:v 1M  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\799e02fe-acf1-4bb4-a863-bbfa406b24cf_1.mp4"
+
+ffmpeg -hide_banner -y -safe 0 -f concat -i "C:\Users\tuanmjnh\Desktop\ded9ee0f-48e9-495b-8c9b-3f5d62a7759d.mp4" -c copy  "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts .mp4"
+
+ffmpeg -i "C:\Users\tuanmjnh\Desktop\0f8a3264-9720-4534-95b1-af4ebee2e1bd.mp4" -filter_complex "[0:v]setpts=PTS/1.1,fps=60[v];[0:a]atempo=1.1[a]" -map [v] -map [a] "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts .mp4"
+
+ffmpeg -i "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts.mp4" -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=60[vz];[vz]scale=1080:1920,hflip[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]volume=1.1[a]" -map [v] -map [a] -hide_banner -y  -aspect 9:16 -b:v 1M  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\13d53778-9094-4b6a-bfe3-2e8cdde91b7e.mp4"
+
+ffmpeg %input% -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=%fps%[vz];[vz]scale=1080:1920,hflip,setpts=PTS/1.1,fps=%fps%[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]atempo=1.1,volume=1.1[a]" %output%
+
+ffmpeg -i "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts.mp4" -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=60[vz];[vz]scale=1080:1920,hflip,setpts=PTS/1.1[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a] -hide_banner -y  -aspect 9:16 -b:v 1M  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\6e3b541a-9422-401f-aec8-3efc3bd60f59.mp4"
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts.mp4"  -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=60[vz];[vz]scale=1080:1920,hflip=enable='if(between(t,2,5),1)',setpts=PTS/1.1[vb];[bg][vb]overlay=shortest=1,scale=0:0[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\How are we at 1.6M  #dance #funny #shorts .mp4"
+
+-hide_banner -y -i "C:\Users\tuanmjnh\Desktop\[4ZEEaW6Unlg].1.mp4"  -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=30[vz];[vz]scale=1251:3051,hflip=enable='if(gte(t,2)*gte(mod(t,3),3),1)',setpts=PTS/1.1[vb];[bg][vb]overlay=shortest=1,scale=-85:-565[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[4ZEEaW6Unlg].1 .mp4"
+
+ffmpeg -ss 0 -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\[4ZEEaW6Unlg].1.mp4" -t 15 -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=30[vz];[vz]scale=1251:3051,hflip=enable='if(gte(t,2)*lte(mod(t,10),3),1)',setpts=PTS/1.1[vb];[bg][vb]overlay=shortest=1,scale=-85:-565[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\[4ZEEaW6Unlg].1 .mp4"
+
+ffmpeg -hide_banner -y -ss 0 -i "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0]..mp4" -t 40.35875990460109  -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=30[vz];[vz]scale=927:1275,hflip=enable='if(gte(t,2)*lte(mod(t,20),3),1)',setpts=PTS/1.1[vb];[bg][vb]overlay=shortest=1:x=76:y=322[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a]  -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0].1.mp4"
+
+
+
+ffmpeg -hide_banner -y -i "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0]..mp4" -ss 3 -to 43.061830998222575  -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=30[vz];[vz]scale=1326:699,hflip=enable='if(gte(t,2)*lte(mod(t,10),3),1)',setpts=PTS/1.1[vb];[bg][vb]overlay=shortest=1:x=-123:y=609[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a] -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0].1.mp4"
+
+ffmpeg -hide_banner -y  -i "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0]..mp4" -ss 43.061830998222575 -to 79.23988651280163  -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=30[vz];[vz]scale=1326:699,hflip=enable='if(gte(t,2)*lte(mod(t,10),3),1)',setpts=PTS/1.1[vb];[bg][vb]overlay=shortest=1:x=-123:y=609[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a] -c copy -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0].2.mp4"
+
+ffmpeg -hide_banner -y -ss 79.23988651280163  -i "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0]..mp4" -to 112.47629321517176  -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=30[vz];[vz]scale=1326:699,hflip=enable='if(gte(t,2)*lte(mod(t,10),3),1)',setpts=PTS/1.1[vb];[bg][vb]overlay=shortest=1:x=-123:y=609[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a] -c:v h264_qsv "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0].3.mp4"
+
+ffmpeg -hide_banner -y  -i "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0]..mp4" -ss 79.23988651280163 -to 112.47629321517176  -aspect 9:16 -b:v 1M -c copy "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0].3.2.mp4"
+
+-hide_banner -y -i "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0]..mp4"  -aspect 9:16 -b:v 1M -filter_complex "color=black,scale=1080x1920,setsar=1[bg];[0:v]zoompan=z='if(between(time,3.1,6.4),1.5,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=30[vz];[vz]scale=1326:699,hflip=enable='if(gte(t,2)*lte(mod(t,10),3),1)',setpts=PTS/1.1[vb];[bg][vb]overlay=shortest=1:x=-123:y=609[v];[0:a]atempo=1.1,volume=1.1[a]" -map [v] -map [a]  -c:v libx264 "C:\Users\tuanmjnh\Desktop\Ramp Car Racing - Car Racing 3D - Android Gameplay [GyO1MtLhyt0]. .mp4"
+
+ffmpeg -hide_banner -y -ss 0 -i "C:\Users\tuanmjnh\Desktop\[4ZEEaW6Unlg].1.mp4" -t 30 -vf "zoompan=z='if(gte(time,10)*lte(mod(time,12.5),5),2,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=29.97" "C:\Users\tuanmjnh\Desktop\OUT.mp4"
+
+
+
+
+
+

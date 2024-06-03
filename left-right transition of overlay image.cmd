@@ -1,1 +1,0 @@
-ffmpeg -i ../i.mp4 -i ../bg.png -filter_complex "overlay=x='if(gte(t,0), -w+(t)*100, 3)':y=450" ../o.mp4

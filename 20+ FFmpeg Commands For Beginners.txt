@@ -1,0 +1,345 @@
+FFmpeg Commands With Examples
+The typical syntax of the FFmpeg command is:
+
+ffmpeg [global_options] {[input_file_options] -i input_url} ...
+ {[output_file_options] output_url} ...
+We are now going to see some important and useful FFmpeg commands.
+
+1. Getting Audio/Video File Information
+To display the details of a media file, run:
+
+$ ffmpeg -i video.mp4
+Sample output:
+
+ffmpeg version n4.1.3 Copyright (c) 2000-2019 the FFmpeg developers
+built with gcc 8.2.1 (GCC) 20181127
+configuration: --prefix=/usr --disable-debug --disable-static --disable-stripping --enable-fontconfig --enable-gmp --enable-gnutls --enable-gpl --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libdrm --enable-libfreetype --enable-libfribidi --enable-libgsm --enable-libiec61883 --enable-libjack --enable-libmodplug --enable-libmp3lame --enable-libopencore_amrnb --enable-libopencore_amrwb --enable-libopenjpeg --enable-libopus --enable-libpulse --enable-libsoxr --enable-libspeex --enable-libssh --enable-libtheora --enable-libv4l2 --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxcb --enable-libxml2 --enable-libxvid --enable-nvdec --enable-nvenc --enable-omx --enable-shared --enable-version3
+libavutil 56. 22.100 / 56. 22.100
+libavcodec 58. 35.100 / 58. 35.100
+libavformat 58. 20.100 / 58. 20.100
+libavdevice 58. 5.100 / 58. 5.100
+libavfilter 7. 40.101 / 7. 40.101
+libswscale 5. 3.100 / 5. 3.100
+libswresample 3. 3.100 / 3. 3.100
+libpostproc 55. 3.100 / 55. 3.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'video.mp4':
+Metadata:
+major_brand : isom
+minor_version : 512
+compatible_brands: isomiso2avc1mp41
+encoder : Lavf58.20.100
+Duration: 00:00:28.79, start: 0.000000, bitrate: 454 kb/s
+Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, smpte170m/bt470bg/smpte170m), 1920x1080 [SAR 1:1 DAR 16:9], 318 kb/s, 30 fps, 30 tbr, 15360 tbn, 60 tbc (default)
+Metadata:
+handler_name : ISO Media file produced by Google Inc. Created on: 04/08/2019.
+Stream #0:1(eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 128 kb/s (default)
+Metadata:
+handler_name : ISO Media file produced by Google Inc. Created on: 04/08/2019.
+At least one output file must be specified
+As you see in the above output, FFmpeg displays the media file information along with FFmpeg details such as version, configuration details, copyright notice, build and library options etc.
+
+If you don't want to see the FFmpeg banner and other details, but only the media file information, use -hide_banner flag like below.
+
+$ ffmpeg -i video.mp4 -hide_banner
+Sample output:
+
+View audio, video file information using FFmpeg
+View audio, video file information using FFmpeg
+See? Now, it displays only the media file details.
+
+Suggested Read:
+
+Display Media Files Information On Linux Using MediaInfo
+2. Converting Video Files To Different Formats
+Since FFmpeg is a feature-rich and powerful audio and video converter, so It's possible to convert media files between different formats. Say for example, to convert mp4 file to avi file, run:
+
+$ ffmpeg -i video.mp4 video.avi
+Similarly, you can convert media files to any format of your choice.
+
+For example, to convert YouTube flv format videos to mpeg format, run:
+
+$ ffmpeg -i video.flv video.mpeg
+If you want to preserve the quality of your source video file, use '-qscale 0' parameter:
+
+$ ffmpeg -i input.webm -qscale 0 output.mp4
+To check list of supported formats by FFmpeg, run:
+
+$ ffmpeg -formats
+3. Converting Video Files To Audio Files
+To convert a video file to audio file, just specify the output format as .mp3, or .ogg, or any other audio formats.
+
+The above command will convert input.mp4 video file to output.mp3 audio file.
+
+$ ffmpeg -i input.mp4 -vn output.mp3
+Also, you can use various audio transcoding options to the output file as shown below.
+
+$ ffmpeg -i input.mp4 -vn -ar 44100 -ac 2 -ab 320 -f mp3 output.mp3
+Here,
+
+-vn - Indicates that we have disabled video recording in the output file.
+-ar - Set the audio frequency of the output file. The common values used are  22050, 44100, 48000 Hz.
+-ac - Set the number of audio channels.
+-ab - Indicates the audio bitrate.
+-f - Output file format. In our case, it's mp3 format.
+The above command will display a warning message like below.
+
+[libmp3lame @ 0x5589ed539240] Bitrate 320 is extremely low, maybe you mean 320k
+The bitrate parameter is set too low. It takes bits/s as argument, not kbits/s
+This is because we have given 320 bits/second as bitrate which is very low.  This will create a smaller output file. For best quality output, use bitrate value as 320k instead of just 320.
+
+4. Change The Volume Of Audio Files
+FFmpeg allows us to change the volume of an audio file using "volume filter" option.
+
+For example, the following command will decrease volume by half.
+
+$ ffmpeg -i input.mp3 -af 'volume=0.5' output.mp3
+Similarly, we can increase the volume like below:
+
+$ ffmpeg -i input.mp3 -af 'volume=1.5' output.mp3
+5. Change Resolution Of Video Files
+If you want to set a particular resolution to a video file, you can use following command:
+
+$ ffmpeg -i input.mp4 -filter:v scale=1280:720 -c:a copy output.mp4
+Or,
+
+$ ffmpeg -i input.mp4 -s 1280x720 -c:a copy output.mp4
+The above command will set the resolution of the given video file to 1280x720.
+
+Similarly, to convert the above file to 640x480 size, run:
+
+$ ffmpeg -i input.mp4 -filter:v scale=640:480 -c:a copy output.mp4
+Or,
+
+$ ffmpeg -i input.mp4 -s 640x480 -c:a copy output.mp4
+This trick will help you to scale your video files to smaller display devices such as tablets and mobiles.
+
+6. Compressing Video Files
+It is always a good idea to reduce the media files' size to lower size to save the disk space.
+
+The following command will compress and reduce the output file's size.
+
+$ ffmpeg -i input.mp4 -vf scale=1280:-1 -c:v libx264 -preset veryslow -crf 24 output.mp4
+Please note that you will lose the quality if you try to reduce the video file size. You can lower that crf value to 23 or lower if 24 is too aggressive.
+
+You could also transcode the audio down a bit and make it stereo to reduce the size by including the following options.
+
+-ac 2 -c:a aac -strict -2 -b:a 128k
+ffmpeg -hide_banner -y -i i.mp4 -c:v libx264 -b:v 1.5M -c:a aac -b:a 128k o.mp4
+
+7. Compressing Audio Files
+Just like compressing video files, you can also compress audio files using -ab flag in order to save some disk space.
+
+Let us say you have an audio file of 320 kbps bitrate. You want to compress it by changing the bitrate to any lower value like below.
+
+$ ffmpeg -i input.mp3 -ab 128 output.mp3
+The list of various available audio bitrates are:
+
+96kbps
+112kbps
+128kbps
+160kbps
+192kbps
+256kbps
+320kbps
+8. Removing Audio Stream From A Video File
+If you don't want audio from a video file, use -an flag.
+
+$ ffmpeg -i input.mp4 -an output.mp4
+Here, 'an' indicates no audio recording. In other words, this option will mute the audio.
+
+The above command will undo all audio related flags.
+
+9. Removing Video Stream From A Media File
+Similarly, if you don't want video stream, you could easily remove it from the media file using 'vn' flag. vn stands for no video recording. In other words, this command converts the given media file into audio file.
+
+The following command will remove the video from the given media file.
+
+$ ffmpeg -i input.mp4 -vn output.mp3
+You can also mention the output file's bitrate using '-ab' flag as shown in the following example.
+
+$ ffmpeg -i input.mp4 -vn -ab 320 output.mp3
+10. Extracting Images From The Video
+Another useful feature of FFmpeg is we can easily extract images from a video file. This could be very useful, if you want to create a photo album from a video file.
+
+To extract images from a video file, use the following command:
+
+$ ffmpeg -i input.mp4 -r 1 -f image2 image-%2d.png
+Here,
+
+-r - Set the frame rate. I.e the number of frames to be extracted into images per second. The default value is 25.
+-f - Indicates the output format i.e image format in our case.
+image-%2d.png - Indicates how we want to name the extracted images. In this case, the names should start like image-01.png, image-02.png, image-03.png and so on. If you use %3d, then the name of images will start like image-001.png, image-002.png and so on.
+11. Cropping Videos
+FFMpeg allows to crop a given media file in any dimension of our choice.
+
+The syntax to crop a video file is given below:
+
+ffmpeg -i input.mp4 -filter:v "crop=w:h:x:y" output.mp4
+Here,
+
+input.mp4 - source video file.
+-filter:v - Indicates the video filter.
+crop - Indicates crop filter.
+w - Width of the rectangle that we want to crop from the source video.
+h - Height of the rectangle.
+x - x coordinate of the rectangle that we want to crop from the source video.
+y - y coordinate of the rectangle.
+Let us say you want to a video with a width of 640 pixels and a height of 480 pixels, from the position (200,150), the command would be:
+
+$ ffmpeg -i input.mp4 -filter:v "crop=640:480:200:150" output.mp4
+Please note that cropping videos will affect the quality. Do not do this unless it is necessary.
+
+12. Convert A Specific Portion Of A Video
+Sometimes, you might want to convert only a specific portion (duration) of the video file to different format. Say for example, the following command will convert the first 10 seconds of given video.mp4 file to video.avi format.
+
+$ ffmpeg -i input.mp4 -t 10 output.avi
+Here, we specify the the time in seconds. Also, it is possible to specify the time in hh.mm.ss format.
+
+13. Set The Aspect Ratio To Video
+You can set the aspect ration to a video file using -aspect flag like below.
+
+$ ffmpeg -i input.mp4 -aspect 16:9 output.mp4
+The commonly used aspect ratios are:
+
+16:9
+4:3
+16:10
+5:4
+2:21:1
+2:35:1
+2:39:1
+14. Adding Poster Image To Media Files
+You can add the poster images to your files, so that the images will be displayed while playing the audio or video files. This could be useful to host audio files in Video hosting or sharing websites.
+
+$ ffmpeg -loop 1 -i inputimage.jpg -i inputaudio.mp3 -c:v libx264 -c:a aac -strict experimental -b:a 192k -shortest output.mp4
+15. Trim A Media File Using Start And Stop Times
+To trim down a video to smaller clip using start and stop times, we can use the following command.
+
+$ ffmpeg -i input.mp4 -ss 00:00:50 -codec copy -t 50 output.mp4
+Here,
+
+--s - Indicates the starting time of the video clip. In our example, starting time is the 50th second.
+-t - Indicates the total time duration.
+This is very helpful when you want to cut a part from an audio or video file using starting and ending time.
+
+Similarly, we can trim down the audio file like below.
+
+$ ffmpeg -i audio.mp3 -ss 00:01:54 -to 00:06:53 -c copy output.mp3
+16. Split Audio/Video Files Into Multiple Parts
+Some websites will allow you to upload only a specific size of video. For example, Whatsapp will allow only 15 seconds videos to set as status message for users in India. In such cases, you can split the large video files into multiple smaller parts like below.
+
+$ ffmpeg -i input.mp4 -t 00:00:30 -c copy part1.mp4 -ss 00:00:30 -codec copy part2.mp4
+Here, -t 00:00:30 indicates a part that is created from the start of the video to the 30th second of video. -ss 00:00:30 shows the starting time stamp for the next part of video. It means that the 2nd part will start from the 30th second and will continue up to the end of the original video file.
+
+Recommended Download - Free Guide: "How to Start Your Own Successful Podcast"
+17. Merge Audio And Video Files
+To merge an audio file and a video file with audio re-encoding, run:
+
+$ ffmpeg -i inputvideo.mp4 -i inputaudio.mp3 -c:v copy -c:a aac output.mp4
+The above command will merge inputvideo.mp4 file with inputaudio.mp3 into output.mp4. It will also re-encode the audio file.
+
+Here, I assume the audio and video files are same length and the video file doesn't has any audio stream.
+
+If your audio or video stream is longer, you can add the -shortest option so that ffmpeg will stop encoding once one file ends.
+
+If your input video already contains audio, and you want to replace it, you need to tell ffmpeg which audio stream to take as shown below:
+
+$ ffmpeg -i inputvideo.mp4 -i inputaudio.mp3 -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 output.mp4
+The -map option makes ffmpeg only use the first video stream from the first input and the first audio stream from the second input for the output file.
+
+If you want to merge an audio file with a video file. without audio re-encoding, simply copy both files like below:
+
+$ ffmpeg -i inputvideo.mp4 -i inputaudio.mp3 -c copy output.mkv
+18. Joining Or Merging Multiple Audio/Video Parts Into One
+FFmpeg will also join the multiple video parts and create a single video file.
+
+Create join.txt file that contains the exact paths of the files that you want to join. All files should be same format (same codec). The path name of all files should be mentioned one by one like below.
+
+file /home/sk/myvideos/part1.mp4
+file /home/sk/myvideos/part2.mp4
+file /home/sk/myvideos/part3.mp4
+file /home/sk/myvideos/part4.mp4
+Now, join all files using command:
+
+$ ffmpeg -f concat -i join.txt -c copy output.mp4
+If you get an error something like below;
+
+[concat @ 0x555fed174cc0] Unsafe file name '/path/to/mp4'
+join.txt: Operation not permitted
+Add "-safe 0":
+
+$ ffmpeg -f concat -safe 0 -i join.txt -c copy output.mp4
+The above command will join part1.mp4, part2.mp4, part3.mp4, and part4.mp4 files into a single file called "output.mp4".
+
+Alternatively, you can use the following one-liner command to join all files in a directory. Go to the directory where you have files and run the following command to join the files named audio1.mp3, audio2,mp3 and audio3.mp3 into output.mp3.
+
+$ ffmpeg -i "concat:audio1.mp3|audio2.mp3|audio3.mp3" -c copy output.mp3
+19. Add Subtitles To A Video File
+We can also add subtitles to a video file using FFmpeg. Download the correct subtitle for your video and add it your video as shown below.
+
+$ fmpeg -i input.mp4 -i subtitle.srt -map 0 -map 1 -c copy -c:v libx264 -crf 23 -preset veryfast output.mp4
+20. Preview Or Test Video Or Audio Files
+You might want to preview to verify or test whether the output file has been properly transcoded or not. To do so, you can play it from your Terminal with command:
+
+$ ffplay video.mp4
+Play video files using ffplay
+Play video files using ffplay
+Similarly, you can test the audio files as shown below.
+
+$ ffplay audio.mp3
+Play audio files using ffplay
+Play audio files using ffplay
+21. Increase/Decrease Video Playback Speed
+FFmpeg allows you to adjust the video playback speed.
+
+To increase the video playback speed, run:
+
+$ ffmpeg -i input.mp4 -vf "setpts=0.5*PTS" output.mp4
+The command will double the speed of the video.
+
+To slow down your video, you need to use a multiplier greater than 1.  To decrease playback speed, run:
+
+$ ffmpeg -i input.mp4 -vf "setpts=4.0*PTS" output.mp4
+22. Increase/Decrease Audio Playback Speed
+To increase or decrease speed up or down audio playback, use the "atempo" audio filter. The following command will double the speed of audio.
+
+$ ffmpeg -i input.mp4 -filter:a "atempo=2.0" -vn output.mp4
+You can use any value between 0.5 and 2.0 for audio.
+
+23. Create Animated GIF
+We use GIF images on almost all social and professional networks for various purposes. Using FFmpeg, we can easily and quickly create animated video files.
+
+The following guide explains how to create an animated GIF file using FFmpeg and ImageMagick in Linux and Unix-like systems.
+
+How To Create Animated GIF In Linux
+Suggested Read:
+
+Gifski - A Cross-platform High-quality GIF Encoder
+24. Create Videos From PDF Files
+I collected many PDF files, mostly Linux tutorials, over the years and saved in my Tablet PC. Sometimes I feel too lazy to read them from the tablet.
+
+So, I decided to create a video from PDF files and watch it in a big screen devices like a TV or a Computer. If you ever wondered how to make a movie file from a collection of PDF files, the following guide will help.
+
+How To Create A Video From PDF Files In Linux
+25. Rotate Videos
+If you have video files with different orientation (portrait or landscape), you can rotate them as described in the following guide.
+
+How To Rotate Videos Using FFMpeg From Commandline
+26. Convert Videos To WhatsApp Video Format
+WhatsApp doesn't support some videos. You can't share them with your contacts or set them in whatsapp status. No worries! We can easily convert videos WhatsApp supported video format with FFmpeg as described in the following link.
+
+Convert Videos To WhatsApp Video Format With FFmpeg
+27. Zoom In And Zoom Out Videos
+FFmpeg has a lot of useful filters to perform a specific task. One of them is zoompan. Using zoompan filter, we can easily zoom in and zoom out every X seconds periodically.
+
+ffmpeg -hide_banner -y -i VIDEO.mp4 -vf "zoompan=z='if(lte(mod(time,10),5),2,1)':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=29.97" OUT.mp4
+
+ffmpeg -hide_banner -y -i VIDEO.mp4 -vf "zoompan=z='if(gte(time,ld(1)+10),st(1,time)*0,if(ld(1),if(lt(time,ld(1)+3),2,1)))':d=1:x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):fps=29.97" OUT.mp4
+
+Refer the following link for more details:
+
+How To Zoom In And Zoom Out Videos Using FFmpeg
+28. Getting Help
+In this guide, I have covered the most commonly used FFmpeg commands. It has a lot more different options to do various advanced functions. To learn more about it, refer the man page.
+
+$ man ffmpeg

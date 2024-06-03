@@ -1,1 +1,0 @@
-ffmpeg -i ../i.mp4 -hide_banner -ab 128 ../o.mp4
